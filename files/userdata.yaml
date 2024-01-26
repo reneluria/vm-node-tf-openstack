@@ -1,0 +1,22 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+package_reboot_if_required: true
+runcmd: 
+  - |
+    curl -fsSL https://deb.nodesource.com/setup_20.x | bash - &&\
+    apt-get install -y nodejs
+    systemctl daemon-reload
+    systemctl enable nodejs_server.service
+    systemctl start nodejs_server.service
+write_files:
+  - path: /home/debian/server.js
+    permissions: "0644"
+    owner: debian:debian
+    encoding: gz+b64
+    content: ${files["server_js"]}
+  - path: /etc/systemd/system/nodejs_server.service
+    permissions: "0644"
+    owner: root:root
+    encoding: gz+b64
+    content: ${files["systemd_unit"]}
