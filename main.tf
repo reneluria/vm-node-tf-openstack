@@ -98,7 +98,13 @@ resource "openstack_compute_instance_v2" "basic" {
   name        = var.stack_name
   flavor_name = var.flavor_name
   key_pair    = openstack_compute_keypair_v2.keypair.name
-  user_data   = file("userdata.yaml")
+
+  user_data = base64encode((templatefile("files/userdata.yaml", {
+    files = merge({
+        "server_js" = base64gzip(file("files/server.js")),
+        "systemd_unit" = base64gzip(file("files/nodejs_server.service"))
+    })
+  })))
 
   network {
     port = openstack_networking_port_v2.port.id
@@ -124,13 +130,17 @@ resource "openstack_compute_instance_v2" "basic" {
   }
 }
 
+locals {
+    instance_ip = openstack_networking_port_v2.port.all_fixed_ips[0]
+}
+
 output "instance" {
-  value = openstack_compute_instance_v2.basic.access_ip_v6
+  value = local.instance_ip
 }
 
 output "command" {
   value = <<COMMAND
-    ssh-keyscan ${openstack_compute_instance_v2.basic.access_ip_v6} >> ~/.ssh/known_hosts
-    SSH_AUTH_SOCK= ssh -i ./sshkey debian@${openstack_compute_instance_v2.basic.access_ip_v6}
+ssh-keyscan ${local.instance_ip} >> ~/.ssh/known_hosts
+SSH_AUTH_SOCK= ssh -i ./sshkey debian@${local.instance_ip}
     COMMAND
 }

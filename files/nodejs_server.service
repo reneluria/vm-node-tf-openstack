@@ -1,0 +1,9 @@
+[Unit]
+Description=hello world with node
+
+[Service]
+ExecStart=/usr/bin/node /usr/src/server.js
+User=debian
+
+[Install]
+WantedBy=multi-user.target

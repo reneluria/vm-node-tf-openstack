@@ -66,16 +66,16 @@ Use the localy created `sshkey` private key to connect to the instance
 ```shell
 ❯ SSH_AUTH_SOCK= ssh -i ./sshkey debian@2001:1600:10:101::aaa
 Linux demo-vm-node 6.1.0-17-cloud-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.69-1 (2023-12-30) x86_64
-
-The programs included with the Debian GNU/Linux system are free software;
-the exact distribution terms for each program are described in the
-individual files in /usr/share/doc/*/copyright.
-
-Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
-permitted by applicable law.
-Last login: Fri Jan 26 14:08:46 2024 from xxx
+(...)
 debian@demo-vm-node:~$ node -e "console.log('hello world')"
 hello world
+```
+
+And of course, a simple node server installed:
+
+```
+> curl "http://[2001:1600:10:101::aaa]:8080"
+Hello World
 ```
 
 Cool, new VM, super cheap, with nodejs :aw_yeah:
