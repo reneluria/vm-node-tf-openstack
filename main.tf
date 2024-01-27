@@ -101,8 +101,8 @@ resource "openstack_compute_instance_v2" "basic" {
 
   user_data = base64encode((templatefile("files/userdata.yaml", {
     files = merge({
-        server_js = base64gzip(file("files/server.js")),
-        systemd_unit = base64gzip(file("files/nodejs_server.service"))
+        "server_js" = base64gzip(file("files/server.js")),
+        "systemd_unit" = base64gzip(file("files/nodejs_server.service"))
     })
   })))
 

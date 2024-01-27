@@ -2,7 +2,7 @@
 Description=hello world with node
 
 [Service]
-ExecStart=/usr/bin/node /home/debian/server.js
+ExecStart=/usr/bin/node /usr/src/server.js
 User=debian
 
 [Install]
