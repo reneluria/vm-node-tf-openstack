@@ -53,12 +53,16 @@ after confirmation, it will create everything and provide you the necessary info
 ```shell
 Outputs:
 
-command = <<EOT
-    ssh-keyscan [2001:1600:10:101::aaa] >> ~/.ssh/known_hosts
-    SSH_AUTH_SOCK= ssh -i ./sshkey debian@[2001:1600:10:101::aaa]
+curl-command = <<EOT
+curl "http://[2001:1600:10:101::aaa]:8080"
 
 EOT
-instance = "[2001:1600:10:101::aaa]"
+instance_ip = "2001:1600:10:101::aaa"
+ssh-command = <<EOT
+ssh-keyscan 2001:1600:10:101::aaa >> ~/.ssh/known_hosts
+SSH_AUTH_SOCK= ssh -i ./sshkey debian@2001:1600:10:101::aaa
+
+EOT
 ```
 
 Use the localy created `sshkey` private key to connect to the instance

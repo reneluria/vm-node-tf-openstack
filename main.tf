@@ -101,8 +101,8 @@ resource "openstack_compute_instance_v2" "basic" {
 
   user_data = base64encode((templatefile("files/userdata.yaml", {
     files = merge({
-        "server_js" = base64gzip(file("files/server.js")),
-        "systemd_unit" = base64gzip(file("files/nodejs_server.service"))
+      "server_js"    = base64gzip(file("files/server.js")),
+      "systemd_unit" = base64gzip(file("files/nodejs_server.service"))
     })
   })))
 
@@ -131,16 +131,22 @@ resource "openstack_compute_instance_v2" "basic" {
 }
 
 locals {
-    instance_ip = openstack_networking_port_v2.port.all_fixed_ips[0]
+  instance_ip = openstack_networking_port_v2.port.all_fixed_ips[0]
 }
 
-output "instance" {
+output "instance_ip" {
   value = local.instance_ip
 }
 
-output "command" {
+output "ssh-command" {
   value = <<COMMAND
 ssh-keyscan ${local.instance_ip} >> ~/.ssh/known_hosts
 SSH_AUTH_SOCK= ssh -i ./sshkey debian@${local.instance_ip}
-    COMMAND
+COMMAND
+}
+
+output "curl-command" {
+  value = <<COMMAND
+curl "http://[${local.instance_ip}]:8080"
+COMMAND
 }
