@@ -7,7 +7,7 @@ on openstack with minimal footprint:
 - boot from volume (small size)
 - ipv6 only
 
-using [terraform](https://www.terraform.io/)
+using [terraform](https://www.terraform.io/) OR [OpenTofu](https://opentofu.org/)
 
 In this example I use Infomaniak Public Cloud because it's performamt and cost effective
 (moreover the company is a must in terms of compliance, ecology, etc)
@@ -21,7 +21,8 @@ Setup
 Prepare
 -------
 
-If not yet done, install terraform using this doc: https://developer.hashicorp.com/terraform/install
+If not yet done, install OpenTofu using this doc https://opentofu.org/docs/intro/install/
+or terraform using this doc: https://developer.hashicorp.com/terraform/install
 
 Clone this repo
 
@@ -36,16 +37,16 @@ and source your credentials
 Then:
 
 ```shell
-terraform init
+tofu init
 ```
 
-It will install terraform openstack provider
+It will install opentofu/terraform openstack provider
 
 Create
 ------
 
 ```shell
-terraform apply
+tofu apply
 ```
 
 after confirmation, it will create everything and provide you the necessary information to connect to the VM
@@ -98,5 +99,5 @@ ports = [333, 555]
 and apply
 
 ```shell
-terraform apply -var-file vm.tfvars
+tofu apply -var-file vm.tfvars
 ```
