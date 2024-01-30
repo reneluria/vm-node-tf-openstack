@@ -21,7 +21,7 @@ variable "image_name" {
 
 variable "flavor_name" {
   type    = string
-  default = "a1-ram2-disk20-perf1"
+  default = "a1-ram2-disk0-perf1"
 }
 
 variable "ports" {
